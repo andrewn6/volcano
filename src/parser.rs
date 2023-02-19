@@ -26,10 +26,10 @@ fn build_ast_from_expr(pair: pest::iterators::Pair<Rule>) ->  Node {
             let mut pair = pair.into_inner();
             let op = pair.next().unwrap();
             let child = pair.next().unwrap();
-            let child - build_ast_from_expr(child);
+            let child = build_ast_from_expr(child);
             parse_unary_expr(op, child)
         }
-        Rules::BinaryExpr -> {
+        Rules::BinaryExpr => {
             let mut pair = pair.into_inner();
             let lhspair = pair.next().unwrap();
             let mut lhs = build_ast_from_term(lhspair);
@@ -41,8 +41,9 @@ fn build_ast_from_expr(pair: pest::iterators::Pair<Rule>) ->  Node {
                 let pair_buf = pair.next();
                 if pair_buf != None {
                     op = pair_buf.unwrap();
-                    lhs = retval
-                    rhs = build_ast_from_term
+                    lhs = retval;
+                    rhs = build_ast_from_term;
+                    retval = parse_binary_expr(ops, lhs, rhs);
                 }
             }
         }
@@ -60,7 +61,7 @@ fn parse_unary_expr(pair: pest::iterators::Pair<Rule>, child: Node) -> Node {
   Node::UnaryExpr {
     op: match pair.as_str() {
             "+" => Operator::Plus,
-            "-" -> Operator::Minux,
+            "-" => Operator::Minus,
             _ => unreachable!(),
     },
     child: Box::new(child),
