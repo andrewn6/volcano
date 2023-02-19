@@ -8,3 +8,9 @@ edition = "2021"
 [dependencies]
 ethers = { version = "1.0.0", features = ["rustls"] }
 inkwell = { git = "https://github.com/TheDan64/inkwell", branch = "master", features = ["llvm12-0"] }
+pest = "2.5.5"
+llvm-sys = "160"
+llvmenv = "0.3.2"
+
+[lib]
+path = "src/lib.rs"
